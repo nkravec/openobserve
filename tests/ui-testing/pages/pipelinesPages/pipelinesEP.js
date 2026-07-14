@@ -17,7 +17,7 @@ export class PipelinesEP {
         this.logsSearchField = '[data-test="logs-vrl-function-editor"]';
         this.logsSearchFieldCollapseButton = '[data-test="logs-search-field-list-collapse-btn"]';
         this.streamPipelinesTab = '[data-test="pipeline-section-tab-streamPipelines"]';
-        this.importPipelineButton = '[data-test="pipeline-list-import-pipeline-btn"]';
+        this.importPipelineButton = '[data-test="pipeline-list-import-btn"]';
         this.importJsonUrlTab = '[data-test="tab-import_json_url"]';
         this.importCancelButton = '[data-test="pipeline-import-cancel-btn"]';
         this.pipelineListTitle = '[data-test="pipeline-list-page"]';
