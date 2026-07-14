@@ -77,7 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               {{ t("pipeline.backfill") }}
             </OButton>
             <OButton
-              data-test="pipeline-list-import-pipeline-btn"
+              data-test="pipeline-list-import-btn"
               variant="outline"
               size="sm"
               icon-left="upload-file"
