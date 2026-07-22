@@ -74,6 +74,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           size="sm"
           icon-left="add"
           data-test="dashboard-new"
+          title="Create a new dashboard in this folder"
           @click="addDashboard"
         >
           {{ t(`dashboard.add`) }}
