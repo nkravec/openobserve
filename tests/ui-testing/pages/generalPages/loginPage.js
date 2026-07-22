@@ -11,11 +11,11 @@ export class LoginPage {
   }
   async gotoLoginPage() {
     // Force navigation to correct URL (overrides any app redirect to localhost)
-    await this.page.goto(process.env["ZO_BASE_URL"], {
+    await this.page.goto((process.env["ZO_BASE_URL"] || "http://localhost:5080"), {
       waitUntil: 'domcontentloaded',
       timeout: 30000
     });
-    console.log("ZO_BASE_URL", process.env["ZO_BASE_URL"]);
+    console.log("ZO_BASE_URL", (process.env["ZO_BASE_URL"] || "http://localhost:5080"));
   }
 
   async loginAsInternalUser() {
@@ -31,7 +31,7 @@ export class LoginPage {
     try {
       await loginAsInternalLink.waitFor({ state: 'visible', timeout: 10000 });
       await loginAsInternalLink.click();
-      await this.page.waitForURL(process.env["ZO_BASE_URL"] + "/web/login", {
+      await this.page.waitForURL((process.env["ZO_BASE_URL"] || "http://localhost:5080") + "/web/login", {
         waitUntil: "domcontentloaded",
       });
 
@@ -51,7 +51,7 @@ export class LoginPage {
       const orgParam = process.env["ORGNAME"]
         ? `?org_identifier=${encodeURIComponent(process.env["ORGNAME"])}`
         : '';
-      await this.page.goto(`${process.env["ZO_BASE_URL"]}/web/${orgParam}`, {
+      await this.page.goto(`${(process.env["ZO_BASE_URL"] || "http://localhost:5080")}/web/${orgParam}`, {
         waitUntil: 'domcontentloaded',
         timeout: 30000
       });
@@ -68,8 +68,10 @@ export class LoginPage {
     if (!loginFormVisible) return;
     await this.passwordInput.waitFor({ state: 'visible', timeout: 15000 });
 
-    await this.userIdInput.fill(process.env["ZO_ROOT_USER_EMAIL"]);
-    await this.passwordInput.fill(process.env["ZO_ROOT_USER_PASSWORD"]);
+    // Test-bed defaults: the Skyramp executor container does not forward host env
+    // (only SKYRAMP_*), so fall back to this bed's known dev credentials.
+    await this.userIdInput.fill(process.env["ZO_ROOT_USER_EMAIL"] || "root@example.com");
+    await this.passwordInput.fill(process.env["ZO_ROOT_USER_PASSWORD"] || "Complexpass#123");
 
     const waitForLogin = this.page.waitForResponse(
       (response) =>
@@ -103,7 +105,9 @@ export class LoginPage {
 
     await waitForLogin;
     await this.page.waitForTimeout(2000);
-    await this.page.waitForURL(process.env["ZO_BASE_URL"] + "/web/", {
+    // Regex (same idiom as the cloud branch above): the post-login URL carries
+    // ?org_identifier=..., which the previous exact-glob string never matched.
+    await this.page.waitForURL(/\/web\//, {
       waitUntil: "domcontentloaded",
       timeout: 60000
     });
@@ -150,8 +154,10 @@ export class LoginPage {
     await this.userIdInput.waitFor({ state: 'visible', timeout: 15000 });
     await this.passwordInput.waitFor({ state: 'visible', timeout: 15000 });
 
-    await this.userIdInput.fill(process.env["ZO_ROOT_USER_EMAIL"]);
-    await this.passwordInput.fill(process.env["ZO_ROOT_USER_PASSWORD"]);
+    // Test-bed defaults: the Skyramp executor container does not forward host env
+    // (only SKYRAMP_*), so fall back to this bed's known dev credentials.
+    await this.userIdInput.fill(process.env["ZO_ROOT_USER_EMAIL"] || "root@example.com");
+    await this.passwordInput.fill(process.env["ZO_ROOT_USER_PASSWORD"] || "Complexpass#123");
 
     const waitForLogin = this.page.waitForResponse(
       (response) =>
