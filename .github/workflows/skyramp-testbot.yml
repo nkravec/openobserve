@@ -107,17 +107,3 @@ jobs:
           targetReadyCheckCommand: 'curl -sf http://localhost:5080/web/login'
           authTokenCommand: './deployment-testbot/get-token.sh'
           uiCredentials: 'root@example.com:Complexpass#123'
-
-      # Upload the bot's machine-readable outputs (the state file carries ground-truth
-      # per-test execution statuses) so every run is auditable independently of the
-      # agent-written PR report. License file lives in the same dir — excluded.
-      - name: Upload testbot state/result artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: skyramp-testbot-results
-          path: |
-            ${{ runner.temp }}/skyramp/
-            !${{ runner.temp }}/skyramp/skyramp_license.lic
-          retention-days: 14
-          if-no-files-found: ignore
