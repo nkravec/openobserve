@@ -101,8 +101,8 @@ jobs:
           githubToken: ${{ steps.skyramp-testbot-app-token.outputs.token }}
           githubAppId: ${{ secrets.SKYRAMP_TESTBOT_APP_ID }}
           githubAppPrivateKey: ${{ secrets.SKYRAMP_TESTBOT_APP_PRIVATE_KEY }}
-          # Pin the UI Maintenance build explicitly (don't drift with npm `latest`).
-          skyrampMcpVersion: '0.3.1'
+          # Pin the POM code-reuse release candidate (don't drift with npm `latest`).
+          skyrampMcpVersion: '0.3.2-rc.pom-1'
           targetSetupCommand: './deployment-testbot/setup.sh'
           targetReadyCheckCommand: 'curl -sf http://localhost:5080/web/login'
           authTokenCommand: './deployment-testbot/get-token.sh'
