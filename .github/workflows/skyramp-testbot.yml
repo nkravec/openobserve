@@ -83,6 +83,12 @@ jobs:
         with:
           node-version: 22
 
+      # UI test-support deps (winston etc.): the executor mounts the checkout, so the
+      # POM layer's own dependencies must be installed here — without this, any
+      # PageManager-importing generated test dies at load with "Cannot find module".
+      - name: Install UI test-support dependencies
+        run: cd tests/ui-testing && (npm ci || npm install)
+
       - name: Build frontend (embedded into binary via rust-embed)
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
