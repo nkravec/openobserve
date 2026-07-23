@@ -26,6 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <OButton
           :data-test="dataTestName"
           id="date-time-button"
+          title="Select a relative or absolute time range"
           ref="datetimeBtn"
           data-cy="date-time-button"
           :variant="variant"
